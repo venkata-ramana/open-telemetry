@@ -1,3 +1,5 @@
 
 /node-instrumentation/node_modules/
 /node-instrumentation/package-lock.json
+
+/otel-collector/tempo-data/
