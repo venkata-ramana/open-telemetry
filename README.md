@@ -14,3 +14,5 @@ export OTEL_METRICS_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:5555
 export OTEL_RESOURCE_ATTRIBUTES=service.name=<serviceName>,service.version=<serviceVersion>
 ```
+
+logs will be collected by otel collector then kibana tempo utilizes the volumns to show the traces.
