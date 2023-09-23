@@ -1,18 +1,48 @@
-# Open-Telemetry
+# What is OpenTelemetry? 
+
+OpenTelemetry is an Observability framework and toolkit designed to create and manage telemetry data such as traces, metrics, and logs. Crucially, OpenTelemetry is vendor- and tool-agnostic, meaning that it can be used with a broad variety of Observability backends, including open source tools like Jaeger and Prometheus, as well as commercial offerings. OpenTelemetry is a Cloud Native Computing Foundation (CNCF) project.
+
+Here is the official [documentation](https://opentelemetry.io/docs/]).
+
+# Why OpenTelemetry?
+
+With the rise of cloud computing, microservices architectures, and ever-more complex business requirements, the need for Observability has never been greater. Observability is the ability to understand the internal state of a system by examining its outputs. In the context of software, this means being able to understand the internal state of a system by examining its telemetry data, which includes traces, metrics, and logs.
+
+In order to make a system observable, it must be instrumented. That is, the code must emit traces, metrics, and logs. The instrumented data must then be sent to an Observability backend.
+
+OpenTelemetry does two important things:
+
+- Allows you to own the data that you generate rather than be stuck with a proprietary data format or tool.
+- Allows you to learn a single set of APIs and conventions
+
+These two things combined enables teams and organizations the flexibility they need in today’s modern computing world
+
+
+
 
 Run docker composer file to setup open telemetry collector in your local. This docker compose also contains prometheus, grafana.
 
-```
+```sh
 cd otel-collector && docker compose up -d
 ```
 
 After setting up, your collector will be running on 5555 port
 
-```
+```sh
 export OTEL_TRACES_EXPORTER=otlp
 export OTEL_METRICS_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:5555
 export OTEL_RESOURCE_ATTRIBUTES=service.name=<serviceName>,service.version=<serviceVersion>
+```
+
+It runs on GRPC protocol by default. You can choose to override as per your needs. 
+
+```yaml
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:5555
 ```
 
 logs will be collected by otel collector then kibana tempo utilizes the volumns to show the traces.
