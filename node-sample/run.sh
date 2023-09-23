@@ -1,0 +1,1 @@
+node --require ./instrumentation.js app.js
