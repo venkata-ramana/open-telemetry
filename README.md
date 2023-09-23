@@ -18,7 +18,10 @@ OpenTelemetry does two important things:
 These two things combined enables teams and organizations the flexibility they need in today’s modern computing world
 
 
+![otel-collector](https://opentelemetry.io/img/otel-diagram.svg)
 
+
+# Local Setup 
 
 Run docker composer file to setup open telemetry collector in your local. This docker compose also contains prometheus, grafana.
 
@@ -35,7 +38,35 @@ export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:5555
 export OTEL_RESOURCE_ATTRIBUTES=service.name=<serviceName>,service.version=<serviceVersion>
 ```
 
-It runs on GRPC protocol by default. You can choose to override as per your needs. 
+logs will be collected by otel collector then kibana tempo utilizes the volumns to show the traces.
+
+Here is the official collector [documentation](https://opentelemetry.io/docs/collector/)
+
+
+# Instrumentation
+
+A few examples are provided in this repo. You can either follow official documentation or take above sample to start instrumentation.
+
+```sh
+cd node-instrumentation
+node --require ./instrumentation.js app.js
+```
+
+You can configure OLTP endpoint and service name like follows. 
+
+```js
+const exporter = new OTLPTraceExporter({
+  url: 'http://localhost:5555',
+});
+
+const provider = new BasicTracerProvider({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'dice-server',
+  }),
+});
+```
+
+OTLP internally uses GRPC protocol. You can choose to override as per your needs. 
 
 ```yaml
 receivers:
@@ -44,10 +75,6 @@ receivers:
       grpc:
         endpoint: 0.0.0.0:5555
 ```
-
-logs will be collected by otel collector then kibana tempo utilizes the volumns to show the traces.
-
-Here is the official collector [documentation](https://opentelemetry.io/docs/collector/)
 
 ## Otel Collector 
 
