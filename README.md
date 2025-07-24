@@ -43,6 +43,8 @@ logs will be collected by otel collector then kibana tempo utilizes the volumns 
 Here is the official collector [documentation](https://opentelemetry.io/docs/collector/)
 
 
+View the traces [http://localhost:3000/explore](http://localhost:3000/explore) 
+
 # Instrumentation
 
 A few examples are provided in this repo. You can either follow official documentation or take above sample to start instrumentation.
